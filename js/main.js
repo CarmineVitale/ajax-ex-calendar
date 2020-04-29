@@ -9,6 +9,11 @@ $(document).ready(function () {
 
     // Punto di partenza
     var baseMonth = moment('2018-01-01'); 
+    console.log(baseMonth.month());
+    
+    //Referenze bottoni
+    var btnPrev = $('.prev');
+    var btnNext = $('.next');
 
     // Init Hndlenars
     var source = $('#day-template').html();
@@ -19,6 +24,44 @@ $(document).ready(function () {
 
     // ottieni festività mese corrente
     printHoliday(baseMonth);
+
+    //Click dei bottoni avanti e indietro
+    btnPrev.click(function() { 
+        
+        var meseAttivo = moment($('h1').attr('data-this-date'));
+
+        if (meseAttivo.month() == 0) {
+            alert('Calendario 2017 non presente')
+        } else {
+            
+            var nuovoMese = meseAttivo.subtract(1, 'months');
+            //Rimuovo vecchio mese
+            $('.month-list').html(' ');
+
+            printMonth(template, nuovoMese);
+            printHoliday(nuovoMese);
+
+        }
+        
+        
+    });
+    btnNext.click(function() { 
+        var meseAttivo = moment($('h1').attr('data-this-date'));
+
+        if (meseAttivo.month() == 11) {
+            alert('Calendario 2019 non presente');
+        }
+        else {
+            var nuovoMese = meseAttivo.add(1, 'months');
+            //Rimuovo vecchio mese
+            $('.month-list').html(' ');
+
+            printMonth(template, nuovoMese);
+            printHoliday(nuovoMese);    
+        }
+        
+    });
+
 
 }); // <-- End doc ready
 
