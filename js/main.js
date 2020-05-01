@@ -9,7 +9,6 @@ $(document).ready(function () {
 
     // Punto di partenza
     var baseMonth = moment('2018-01-01'); 
-    console.log(baseMonth.month());
     
     //Referenze bottoni
     var btnPrev = $('.prev');
@@ -63,6 +62,8 @@ $(document).ready(function () {
     });
 
 
+
+
 }); // <-- End doc ready
 
 
@@ -80,6 +81,19 @@ function printMonth(template, date) {
 
     // Imposta data attribute data visualizzata
     $('.month').attr('data-this-date',  date.format('YYYY-MM-DD'));
+
+
+
+    var settimana = date.weekday()-1;
+   
+
+    for( var i = 0; i < settimana; i++) {
+        var data = {
+            dayNum: '',
+            fullDate: ''
+        };
+        $('.month-list').append(template(data));
+    }
 
     // genera giorni mese
     for (var i = 0; i < daysInMonth; i++) {

@@ -5,12 +5,12 @@
 }
 
 body {
-    font-family: sans-serif;
+    font-family: 'Manrope', sans-serif;
 }
 
 .container {
     margin: 0 auto;
-    width: 800px;
+    width: 750px;
 }
 
 .month-list li.holiday {
@@ -25,24 +25,40 @@ body {
 }
 .main-header i {
     font-size: 25px;
-    
     margin: 0 15px;
     cursor: pointer;
-    transition: font-size 0.3s linear;
+    transition: color 0.2s linear;
 }
+
+.main-header i.prev {
+    animation: move 3s infinite;
+}
+
+.main-header i.next {
+    animation: mymove 3s infinite;
+}
+
+@keyframes mymove {
+    from {transform: translateX(0px);}
+    to {transform: translateX(10px);}
+  }
+  @keyframes move {
+    from {transform: translateX(0px);}
+    to {transform: translateX(-10px);}
+  }
 .main-header i:hover {
-    font-size: 30px;
     color: green;
 }
 .month-list {
     display: flex;
     flex-wrap: wrap;
 }
-.month-list li {
+li {
     list-style: none;
     flex-basis: 100px;
     height: 100px;
     border: 1px solid black;
+    border-radius: 10px;
     margin-bottom: 5px;
     margin-right: 5px;
     display: flex;
@@ -53,4 +69,22 @@ body {
 }
 p.festa {
     margin-top: 5px;
+}
+
+.days ul {
+    display: flex;
+}
+.days ul li {
+    height: 40px;
+    text-align: center;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 15px;
+} 
+.days ul li.sunday {
+    background-color: red;
+}
+li[data-complete-date=''] { 
+   border: none;
 }
