@@ -26,39 +26,19 @@ $(document).ready(function () {
 
     //Click dei bottoni avanti e indietro
     btnPrev.click(function() { 
-        
-        var meseAttivo = moment($('h1').attr('data-this-date'));
-
-        if (meseAttivo.month() == 0) {
-            alert('Calendario 2017 non presente')
-        } else {
-            
-            var nuovoMese = meseAttivo.subtract(1, 'months');
-            //Rimuovo vecchio mese
-            $('.month-list').html(' ');
-
-            printMonth(template, nuovoMese);
-            printHoliday(nuovoMese);
-
-        }
-        
-        
+        navigaCalendario(template, 'prev')
     });
     btnNext.click(function() { 
-        var meseAttivo = moment($('h1').attr('data-this-date'));
+        navigaCalendario(template, 'next')
+    });
 
-        if (meseAttivo.month() == 11) {
-            alert('Calendario 2019 non presente');
+    //Navigare con pressione frecce tastiera
+    $('body').keyup(function (e) { 
+        if (e.keyCode == 37) {
+            navigaCalendario(template, 'prev')
+        } else if (e.keyCode == 39) {
+            navigaCalendario(template, 'next')
         }
-        else {
-            var nuovoMese = meseAttivo.add(1, 'months');
-            //Rimuovo vecchio mese
-            $('.month-list').html(' ');
-
-            printMonth(template, nuovoMese);
-            printHoliday(nuovoMese);    
-        }
-        
     });
 
 
@@ -132,8 +112,10 @@ function printHoliday(date) {
 
             for (var i = 0; i < holidays.length; i++) {
                 var thisHoliday = holidays[i];
+                console.log(thisHoliday);
 
                 var listItem = $('li[data-complete-date="' + thisHoliday.date + '"]');
+                
 
                 if(listItem) {
                     listItem.addClass('holiday');
@@ -146,4 +128,26 @@ function printHoliday(date) {
             console.log('Errore chiamata festività'); 
         }
     });
+}
+
+//Navigare tra i mesi
+function navigaCalendario(template, direction) {
+        var meseAttivo = moment($('h1').attr('data-this-date'));
+
+        if (meseAttivo.month() == 0 && direction == 'prev' || meseAttivo.month() == 11 && direction == 'next' ) {
+            alert('Calendario non presente');
+        }
+        else {
+            if (direction == 'next') {
+                var nuovoMese = meseAttivo.add(1, 'months');
+            } else {
+                var nuovoMese = meseAttivo.subtract(1, 'months');
+            }
+            
+            //Rimuovo vecchio mese
+            $('.month-list').html(' ');
+
+            printMonth(template, nuovoMese);
+            printHoliday(nuovoMese);    
+        }
 }
